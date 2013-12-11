@@ -1,4 +1,4 @@
-package com.example.DivingApp;
+package com.ejp.DivingApp;
 
 import android.app.Activity;
 import android.os.Bundle;
