@@ -9,5 +9,10 @@
     <string name="menu_settings">settings</string>
     <string name="title_section1">List</string>
     <string name="title_section2">Add</string>
-
+    <string-array name="menu_items">
+        <item>Home</item>
+        <item>My dives</item>
+    </string-array>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>
