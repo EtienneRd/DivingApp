@@ -17,9 +17,8 @@ public class MainActivity extends FragmentActivity {
      * The serialization (saved instance state) Bundle key representing the
      * current tab position.
      */
-    private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
+    private static final String STATE_SELECTED_NAVIGATION_ITEM = "home";
 
-    private String[] menuItems;
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -32,11 +31,7 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        // Filling menuItems array.
-        menuItems = getResources().getStringArray(R.array.menu_items);
-
         mTitle = mDrawerTitle = getTitle();
-        menuItems = getResources().getStringArray(R.array.menu_items);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -44,7 +39,8 @@ public class MainActivity extends FragmentActivity {
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, menuItems));
+                R.layout.drawer_list_item,
+                getResources().getStringArray(R.array.menu_items)));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
@@ -71,6 +67,12 @@ public class MainActivity extends FragmentActivity {
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        // Display Home fragment on activity creation.
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_frame, FragHome.getInstance())
+                .commit();
     }
 
     /* The click listener for ListView in the navigation drawer */
@@ -86,7 +88,7 @@ public class MainActivity extends FragmentActivity {
 
         Fragment fragment = null;
 
-        // update the main content by replacing fragments
+        // Update the main content by replacing fragments.
         switch (position) {
             case 0:
                 // FragHome.
@@ -109,7 +111,7 @@ public class MainActivity extends FragmentActivity {
         fragManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
 
 
-        // update selected item and title, then close the drawer
+        // Update selected item and title, then close the drawer.
         mDrawerList.setItemChecked(position, true);
         mDrawerLayout.closeDrawer(mDrawerList);
     }
